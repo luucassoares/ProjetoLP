@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <<link rel="stylesheet" type="text/css" href="estilo.css"/>
-        <title>JSP Page</title>
+        <title>Index</title>
     </head>
 <body class="align">
 
@@ -18,16 +18,16 @@
 
     <div class="grid__container">
 
-      <form action="" method="post" class="form form--login">
+      <form action="Controller" method="post" class="form form--login">
 
         <div class="form__field">
           <label class="fontawesome-user" for="login__username"><span class="hidden">Username</span></label>
-          <input id="login__username" type="text" class="form__input" placeholder="Username" required>
+          <input id="login__username" type="text" class="form__input" placeholder="Username" name="username" required>
         </div>
 
         <div class="form__field">
           <label class="fontawesome-lock" for="login__password"><span class="hidden">Password</span></label>
-          <input id="login__password" type="password" class="form__input" placeholder="Password" required>
+          <input id="login__password" type="password" class="form__input" placeholder="Password" name="password" required>
         </div>
 
         <div class="form__field">
