@@ -37,13 +37,13 @@ public class Usuario implements Serializable {
     @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 40)
+    @NotNull
     @Column(name = "NOME")
     private String nome;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 40)
+    @NotNull
     @Column(name = "SENHA")
     private String senha;
 
@@ -106,7 +106,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.br.lp3.steam.Usuario[ id=" + id + " ]";
+        return "com.br.lp3.steam.model.Usuario[ id=" + id + " ]";
     }
     
 }

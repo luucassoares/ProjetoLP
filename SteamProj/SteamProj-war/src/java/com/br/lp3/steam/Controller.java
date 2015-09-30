@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author lucas
  */
 public class Controller extends HttpServlet {
+
     private String password;
     private String username;
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("SteamProj-warPU");
@@ -39,12 +40,14 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+
             Usuario user = new Usuario();
             user.setNome(username);
             user.setSenha(password);
             em.getTransaction().begin();
             em.persist(user);
             em.getTransaction().commit();
+            em.close();
         }
     }
 
