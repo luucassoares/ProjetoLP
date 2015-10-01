@@ -24,8 +24,7 @@ public class Controller extends HttpServlet {
 
     private String password;
     private String username;
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("SteamProj-warPU");
-    EntityManager em = emf.createEntityManager();
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,12 +39,18 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-            Usuario user = new Usuario();
-            user.setNome(username);
-            user.setSenha(password);
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("SteamProj-warPU");
+            EntityManager em = emf.createEntityManager();
+            
             em.getTransaction().begin();
+            
+            Usuario user = new Usuario();
+            user.setNome("oi1oi2");
+            user.setSenha("oi3oi4");
+//            user.setId(1);
+            
             em.persist(user);
+            
             em.getTransaction().commit();
             em.close();
         }
