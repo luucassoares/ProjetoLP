@@ -5,10 +5,13 @@
  */
 package steamyserver;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import steamyserver.model.Usuario;
+import steamyserver.model.UsuarioDAO;
 
 /**
  *
@@ -21,17 +24,24 @@ public class SteamyServer {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("SteamyServerPU");
-        EntityManager em = emf.createEntityManager();
+        UsuarioDAO dao = new UsuarioDAO();
         
-        em.getTransaction().begin();
-        Usuario user = new Usuario();
-        user.setUsuarioNome("Felipe");
-        user.setUsuarioSenha("123");
-        em.persist(user);
-        em.getTransaction().commit();//comitar ftw
-        em.close();
+//        Usuario user = new Usuario();
+//        user.setUsuarioNome("Teste 1");
+//        user.setUsuarioSenha("Teste 2");
+//        
+//        dao.create(user);
         
+        List<Usuario> users = dao.read();
+        for (Usuario user : users) {
+            System.out.println(user.getUsuarioNome());
+            System.out.println(user.getUsuarioId());
+            user.setUsuarioNome("bob");
+            dao.update(user);
+        }
+        dao.em.close();
+            
+            
     }
     
 }
