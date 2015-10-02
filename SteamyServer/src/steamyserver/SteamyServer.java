@@ -26,19 +26,19 @@ public class SteamyServer {
         // TODO code application logic here
         UsuarioDAO dao = new UsuarioDAO();
         
-//        Usuario user = new Usuario();
-//        user.setUsuarioNome("Teste 1");
-//        user.setUsuarioSenha("Teste 2");
-//        
-//        dao.create(user);
+        Usuario user = new Usuario();
+        user.setUsuarioNome("Teste 1");
+        user.setUsuarioSenha("Teste 2");
         
-        List<Usuario> users = dao.read();
-        for (Usuario user : users) {
-            System.out.println(user.getUsuarioNome());
-            System.out.println(user.getUsuarioId());
-            user.setUsuarioNome("bob");
-            dao.update(user);
-        }
+        dao.create(user);
+//        
+//        List<Usuario> users = dao.read();
+//        for (Usuario user : users) {
+//            System.out.println(user.getUsuarioNome());
+//            System.out.println(user.getUsuarioId());
+//            user.setUsuarioNome("bob");
+//            dao.update(user);
+//        }
         dao.em.close();
             
             
