@@ -24,15 +24,21 @@ public class UsuarioDAO  extends UnicastRemoteObject implements GenericDAO<Usuar
     public EntityManager em;
     
     public UsuarioDAO() throws RemoteException{
-        emf = Persistence.createEntityManagerFactory("SteamyServerPU");
-        em = emf.createEntityManager();
+        createEM();
     }
 
+    public void createEM(){
+        if(em == null){
+            emf = Persistence.createEntityManagerFactory("SteamyServerPU");
+            em = emf.createEntityManager();
+        }
+    }
     
     
     @Override
     public void create(Usuario t) throws RemoteException{
-        
+        System.out.println("OIiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiCREATEiiiiiiiiiiiiiii");
+        createEM();
         em.getTransaction().begin();
         em.persist(t);
         em.getTransaction().commit();//comitar ftw
@@ -41,9 +47,9 @@ public class UsuarioDAO  extends UnicastRemoteObject implements GenericDAO<Usuar
 
     @Override
     public List<Usuario> read() throws RemoteException {
+        
         List<Usuario> users ;
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("SteamyServerPU");
-        EntityManager em = emf.createEntityManager();
+        createEM();
         
         Query query = em.createNamedQuery("Usuario.findAll");
         
@@ -58,8 +64,7 @@ public class UsuarioDAO  extends UnicastRemoteObject implements GenericDAO<Usuar
 
     @Override
     public void update(Usuario t) throws RemoteException {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("SteamyServerPU");
-        EntityManager em = emf.createEntityManager();
+        createEM();
         
         em.getTransaction().begin();
         
@@ -72,18 +77,16 @@ public class UsuarioDAO  extends UnicastRemoteObject implements GenericDAO<Usuar
 
     @Override
     public void delete(Usuario t)  throws RemoteException{
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("SteamyServerPU");
-        EntityManager em = emf.createEntityManager();
-        
+        createEM();
         em.getTransaction().begin();
+        em.merge(t);
         em.remove(t);
         em.getTransaction().commit();//comitar ftw
 //        em.close();
     }
     
     public Usuario busca(int id) throws RemoteException{
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("SteamyServerPU");
-        EntityManager em = emf.createEntityManager();
+        createEM();
         
         Usuario user = em.find(Usuario.class, id);
         

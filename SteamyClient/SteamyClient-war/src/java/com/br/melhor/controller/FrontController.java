@@ -24,6 +24,10 @@ public class FrontController extends HttpServlet {
     @EJB
     private LoginManagerLocal loginManager;
 
+    private String command;
+    private String name;
+    private String senha;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,9 +49,16 @@ public class FrontController extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             
-            boolean resp = loginManager.authorize("admin", "admin");
-            if(resp) out.println("WELCOME");
-            else out.print("YOU SHALL NOT PASS!");
+            
+            if (command.equals("log")){
+                boolean resp = loginManager.authorize(name, senha);
+                if(resp) out.println("WELCOME "+name);
+                else out.print("YOU SHALL NOT PASS!");
+            }
+            else{
+                loginManager.cadastro(name, senha);
+            }
+            
             
             
             out.println("</body>");
@@ -81,6 +92,9 @@ public class FrontController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        this.command = request.getParameter("command");
+        this.name = request.getParameter("username");
+        this.senha = request.getParameter("password");
         processRequest(request, response);
     }
 

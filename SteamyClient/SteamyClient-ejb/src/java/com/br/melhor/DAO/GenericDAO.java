@@ -14,8 +14,8 @@ import java.util.List;
  * @author felipemramos
  */
 public interface GenericDAO<T> extends Remote{
-    public boolean insert(T t) throws RemoteException;
-    public List<T> read() throws RemoteException;
-    public boolean update(T t) throws RemoteException;
-    public boolean delete(T t) throws RemoteException;
+    public void create(T t) throws RemoteException;
+    public List<T>  read() throws RemoteException;
+    public void update(T t) throws RemoteException;
+    public void delete(T t)throws RemoteException;
 }

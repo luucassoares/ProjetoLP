@@ -5,7 +5,7 @@
  */
 package com.br.melhor.rmi;
 
-import com.br.melhor.entities.Usuario;
+import com.br.melhor.model.Usuario;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -19,5 +19,7 @@ public interface LoginManagerLocal {
     public List<Usuario> buscarUsuarios();
 
     public boolean authorize(String username, String password);
+    
+    public boolean cadastro(String username, String password) ;
     
 }

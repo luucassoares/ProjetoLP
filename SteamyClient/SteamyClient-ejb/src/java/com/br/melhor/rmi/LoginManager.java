@@ -6,7 +6,7 @@
 package com.br.melhor.rmi;
 
 import com.br.melhor.DAO.GenericDAO;
-import com.br.melhor.entities.Usuario;
+import com.br.melhor.model.Usuario;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -23,13 +23,21 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class LoginManager implements LoginManagerLocal {
+    Registry registro;
+    GenericDAO servico;
+    
+    private void createServ() throws RemoteException, NotBoundException{
+        if(registro == null || servico == null){
+            registro = LocateRegistry.getRegistry("localhost", 1099);
+            servico = (GenericDAO) registro.lookup("UsuarioDAO");
+        }
+    }
 
     @Override
     public List<Usuario> buscarUsuarios() {
         List<Usuario> lista = new ArrayList<>();
         try {
-            Registry registro = LocateRegistry.getRegistry("localhost", 1099);
-            GenericDAO servico = (GenericDAO) registro.lookup("UsuarioDAO");
+            createServ();
             lista = servico.read();
         } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -44,6 +52,22 @@ public class LoginManager implements LoginManagerLocal {
             if(usuario.getUsuarioNome().equals(username) && usuario.getUsuarioSenha().equals(password)){
                 return true;
             }
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean cadastro(String username, String password) {
+        try {
+            createServ();
+            Usuario user = new Usuario();
+            user.setUsuarioNome(username);
+            user.setUsuarioSenha(password);
+                    
+            servico.create(user);
+            System.out.println("CADSTRO");
+        } catch (RemoteException | NotBoundException ex) {
+            Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
